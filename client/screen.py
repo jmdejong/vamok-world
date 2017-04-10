@@ -5,7 +5,7 @@ class Screen:
     
     
     def __init__(self, stdscr):
-        #curses.curs_set(0)
+        curses.curs_set(0)
         self.height, self.width = stdscr.getmaxyx()
         self.stdscr = stdscr
         self.fieldpad = curses.newpad(100,200)

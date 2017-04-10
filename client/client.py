@@ -11,6 +11,8 @@ import argparse
 from connection import Connection
 from screen import Screen
 
+# todo: remove references to tron
+
 #logging.basicConfig(filename="client.log", filemode='w', level=logging.DEBUG)
 
 
@@ -66,10 +68,6 @@ class Client:
                 ))
         if 'info' in data:
             self.screen.putPlayers(json.dumps(data['info'], indent=2), self.fieldWidth+2)
-        #if 'width' in data:
-            #self.fieldWidth = data['width']
-        #if 'height' in data:
-            #self.fieldHeight = data['height']
         self.screen.refresh()
     
     def command_loop(self):

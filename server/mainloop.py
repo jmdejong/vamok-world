@@ -2,7 +2,6 @@
 
 import gameserver
 from game import Game
-from drawfield import DrawField
 import argparse
 import threading
 import time
@@ -92,8 +91,6 @@ class TronGame:
                 self.players[name].score += 1
     
     def sendState(self):
-        
-        output = DrawField(self.game.field, 0, 0, WIDTH, HEIGHT).toString()
         
         self.server.sendState(self.game, WIDTH, HEIGHT)
         
