@@ -28,6 +28,10 @@ class Client:
         
         self.connection = Connection()
         self.connection.connect(address)
+        
+        self.lastoutputstring = None
+        self.lastinfostring = None
+        
         if not spectate:
             self.connection.send(json.dumps({"name":name}))
         
@@ -61,13 +65,21 @@ class Client:
             self.fieldHeight = data['field']['height']
             fieldCells = data['field']['data']
             mapping = data['field']['mapping']
-            self.screen.put('\n'.join(
+            outputstring = '\n'.join(
                 ''.join(
                     self.characters.get(mapping[fieldCells[x + y*self.fieldWidth]], '?') for x in range(self.fieldWidth)
                     ) for y in range(self.fieldHeight)
-                ))
+                )
+            if outputstring != self.lastoutputstring:
+                self.screen.put(outputstring, self.fieldWidth, self.fieldHeight)
+                self.lastoutputstring = outputstring
+            #else:
+                #self.screen.put('_'*100)
         if 'info' in data:
-            self.screen.putPlayers(json.dumps(data['info'], indent=2), self.fieldWidth+2)
+            infostring = json.dumps(data['info'], indent=2)
+            if infostring != self.lastinfostring:
+                self.screen.putPlayers(infostring, self.fieldWidth+2)
+                self.lastinfostring = infostring
         self.screen.refresh()
     
     def command_loop(self):

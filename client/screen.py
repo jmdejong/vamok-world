@@ -10,13 +10,16 @@ class Screen:
         self.stdscr = stdscr
         self.fieldpad = curses.newpad(100,200)
         self.playerpad = curses.newpad(100,100)
+        self.changed = False
     
     
-    def put(self, field):
-        self.fieldpad.clear()
+    def put(self, field, width, height):
+        #self.fieldpad.clear()
+        #if (
         self.fieldpad.addstr(0, 0, field)
         self.height, self.width = self.stdscr.getmaxyx()
-        self.fieldpad.noutrefresh(0,0,0,0,self.height-1,self.width-1)
+        self.fieldpad.noutrefresh(0,0,0,0,min(height, self.height-1), min(width, self.width-1))
+        self.changed = True
         
     def putPlayers(self, players, x=0, y=0):
         self.playerpad.clear()
@@ -25,6 +28,9 @@ class Screen:
         #print(x, y, self.width, self.height)
         if x < self.width and y < self.height:
             self.playerpad.noutrefresh(0,0,y,x,self.height-1,self.width-1)
+            self.changed = True
     
     def refresh(self):
-        curses.doupdate()
+        if self.changed:
+            curses.doupdate()
+        self.changed = False
