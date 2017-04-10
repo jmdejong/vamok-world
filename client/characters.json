@@ -1,0 +1,14 @@
+{
+    "ascii":{
+        "tree": "T",
+        "wall": "#",
+        "rock": "X",
+        "stone": "o",
+        "player": "@",
+        "grass1": ".",
+        "grass2": ",",
+        "grass3": "'",
+        "grass4": "`",
+        "deer": "d"
+    }
+}
